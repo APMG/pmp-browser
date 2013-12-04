@@ -30,6 +30,8 @@ if ((isset($_SERVER['HTTP_X_REQUESTED_WITH'])
     (isset($_POST['X-PMPB-Requested-With'])
         && strtolower($_POST['X-PMPB-Requested-With']) == 'xmlhttprequest'
     )
+    ||
+    (isset($_GET['xhr']) && $_GET['xhr'])
 ) {
     $is_xhr = true;
 }
@@ -100,6 +102,9 @@ function pmpb_build_params() {
             $params[$field] = $_GET[$field];
         }
     }
+    if (!isset($params['limit'])) {
+        $params['limit'] = 10;
+    }
     return $params;
 }
 
@@ -127,9 +132,21 @@ $params = pmpb_build_params();
  <div id="main">
   <h1>PMP Browser</h1>
   <form>
-   <label for="text">All text:<label><input name="text" value="<?php echo isset($params['text']) ? htmlspecialchars($params['text']) : '' ?>" />
-   <label for="tag">Tag:</label><input name="tag" value="<?php echo isset($params['tag']) ? htmlspecialchars($params['tag']) : '' ?>" />
-   <button>Search</button>
+  <table>
+   <tr><th>All text:</th><td><input name="text" value="<?php echo isset($params['text']) ? htmlspecialchars($params['text']) : '' ?>" /></td></tr>
+   <tr><th>Tag:</th><td><input name="tag" value="<?php echo isset($params['tag']) ? htmlspecialchars($params['tag']) : '' ?>" /></td></tr>
+   <tr><th>Results per page:</th><td>
+    <select name="limit">
+   <?php foreach (array(10,25,50,100) as $n) { 
+         echo '<option';
+         if ($params['limit'] == $n) { echo ' selected="selected"'; }
+         echo ">$n</option>\n";
+     }
+   ?>
+    </select>
+   </td></tr>
+   <tr><th></th><td><button>Search</button></td></tr>
+  </table>
   </form>
   <div id="results"></div>
   <?php if (count($_GET)) { ?>

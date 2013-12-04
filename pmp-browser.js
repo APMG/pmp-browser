@@ -10,7 +10,7 @@ PMPB.search = function(apiUrl, resultFormatter) {
     if (!resultFormatter) resultFormatter = PMPB.formatResult;
     resultsDiv.append(spinner);
     //console.log('req: ' + apiUrl);
-    $.getJSON(apiUrl, function(res) {
+    $.getJSON(apiUrl+'&xhr=1', function(res) {
         //console.log(res);
         resultsDiv.html('');
         if (res.total == 0) {
@@ -27,8 +27,10 @@ PMPB.search = function(apiUrl, resultFormatter) {
 
 PMPB.formatResult = function(r) {
     //console.log(r);
+    if (!r) return '';
+    var url = r.links.navigation[0].href;
     var d = '<div class="result">';
-       d += '<a href="?doc='+encodeURIComponent(r.links.navigation[0].href)+'">';
+       d += '<a href="?doc='+encodeURIComponent(url)+'">';
        d += r.attributes.title;
        d += '</a>';
        if (r.attributes.tags) {
