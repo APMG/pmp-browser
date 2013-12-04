@@ -1,0 +1,12 @@
+body {
+    font-family: verdana,arial,helvetica,'sans-serif';
+    margin: 0;
+}
+
+#results {
+    padding: 1em;
+}
+
+.result {
+    margin: 1em;
+}

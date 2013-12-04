@@ -14,23 +14,39 @@
 
 // include libraries
 require_once dirname(realpath(__FILE__)) . '/phpsdk/lib/Pmp/Sdk/AuthClient.php';
+require_once dirname(realpath(__FILE__)) . '/phpsdk/lib/Pmp/Sdk/CollectionDocJson.php';
+require_once dirname(realpath(__FILE__)) . '/phpsdk/lib/Pmp/Sdk/Exception.php';
 
 use \Pmp\Sdk\AuthClient as AuthClient;
 use \Pmp\Sdk\CollectionDocJson as CollectionDocJson;
 use \Pmp\Sdk\Exception as Exception;
 
+// detect whether we are called via XHR
+$is_xhr = false;
+if ((isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+        && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'
+    )
+    ||
+    (isset($_POST['X-PMPB-Requested-With'])
+        && strtolower($_POST['X-PMPB-Requested-With']) == 'xmlhttprequest'
+    )
+) {
+    $is_xhr = true;
+}
+
+$this_url = $_SERVER['REQUEST_URI']; // under Apache
 
 /**
  * main()
  */
-function pmp_browser_run() {
+function pmpb_run() {
     include dirname(realpath(__FILE__)) . '/pmp-config.php';
     $client = new AuthClient($host, $client_id, $client_secret);
-    $params = pmp_browser_build_params();
+    $params = pmpb_build_params();
     //print_r($params);
     header('Content-Type: application/json');
     if (!$params) {
-        header('X-PMP-Browser: invalid parameters', false, 400);
+        header('X-PMPB: invalid parameters', false, 400);
         print json_encode(array('error' => 'No valid parameters found'));
         exit();
     }
@@ -39,7 +55,7 @@ function pmp_browser_run() {
         'query' => $params,
     );
     if (!$results) {
-        header('X-PMP-Browser: no results', false, 404);
+        header('X-PMPB: no results', false, 404);
         $response['total'] = 0;
     }
     else {
@@ -61,8 +77,8 @@ function pmp_browser_run() {
  *
  * @return array $params
  */
-function pmp_browser_build_params() {
-    $valid_fields = array('tag', 'text', 'title', 'limit', 'offset', 'searchsort', 'collection');
+function pmpb_build_params() {
+    $valid_fields = array('tag', 'text', 'limit', 'offset', 'searchsort', 'collection');
     $params = array();
     foreach ($valid_fields as $field) {
         if (isset($_GET[$field])) {
@@ -73,26 +89,32 @@ function pmp_browser_build_params() {
 }
 
 
-// run the app
-if (count($_GET)) {
-    // if we have ? params
-    pmp_browser_run();
+// run the app if called as ajax
+if ($is_xhr) {
+    pmpb_run();
 }
-else {
-    // print simple form
 ?>
 <html>
  <head>
   <title>PMP Browser</title>
+  <link rel="stylesheet" type="text/css" href="pmp-browser.css" />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript" src="pmp-browser.js"></script>
  </head>
  <body>
   <h1>PMP Browser</h1>
   <form>
-   <input name="q" />
+   <input name="text"  />
    <button>Search</button>
   </form>
+  <div id="results"></div>
+  <?php if (count($_GET)) { ?>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        PMPB.search('<?php echo $this_url ?>');
+    });
+  </script>
+  <?php } ?>
  </body>
 </html>
 
-<?php
-}
