@@ -36,10 +36,11 @@ if ((isset($_SERVER['HTTP_X_REQUESTED_WITH'])
 
 $this_url = $_SERVER['REQUEST_URI']; // under Apache
 
+
 /**
- * main()
+ * Proxy GET params to PMP search.
  */
-function pmpb_run() {
+function pmpb_search() {
     include dirname(realpath(__FILE__)) . '/pmp-config.php';
     $client = new AuthClient($host, $client_id, $client_secret);
     $params = pmpb_build_params();
@@ -55,7 +56,7 @@ function pmpb_run() {
         'query' => $params,
     );
     if (!$results) {
-        header('X-PMPB: no results', false, 404);
+        header('X-PMPB: no results', false, 200);
         $response['total'] = 0;
     }
     else {
@@ -73,6 +74,20 @@ function pmpb_run() {
 
 
 /**
+ *
+ *
+ * @param unknown $url
+ */
+function pmpb_show_doc($url) {
+    include dirname(realpath(__FILE__)) . '/pmp-config.php';
+    $client = new AuthClient($host, $client_id, $client_secret);
+    $doc = new CollectionDocJson($url, $client);
+    header('Content-Type: application/json');
+    print json_encode($doc);
+}
+
+
+/**
  * Parse $_GET into PMP-friendly string.
  *
  * @return array $params
@@ -81,7 +96,7 @@ function pmpb_build_params() {
     $valid_fields = array('tag', 'text', 'limit', 'offset', 'searchsort', 'collection');
     $params = array();
     foreach ($valid_fields as $field) {
-        if (isset($_GET[$field])) {
+        if (isset($_GET[$field]) && strlen($_GET[$field])) {
             $params[$field] = $_GET[$field];
         }
     }
@@ -91,8 +106,15 @@ function pmpb_build_params() {
 
 // run the app if called as ajax
 if ($is_xhr) {
-    pmpb_run();
+    pmpb_search();
 }
+else if ($_GET['doc']) {
+    pmpb_show_doc($_GET['doc']);
+    exit();
+}
+
+$params = pmpb_build_params();
+
 ?>
 <html>
  <head>
@@ -102,9 +124,11 @@ if ($is_xhr) {
   <script type="text/javascript" src="pmp-browser.js"></script>
  </head>
  <body>
+ <div id="main">
   <h1>PMP Browser</h1>
   <form>
-   <input name="text"  />
+   <label for="text">All text:<label><input name="text" value="<?php echo htmlspecialchars($params['text']) ?>" />
+   <label for="tag">Tag:</label><input name="tag" value="<?php echo htmlspecialchars($params['tag']) ?>" />
    <button>Search</button>
   </form>
   <div id="results"></div>
@@ -115,6 +139,6 @@ if ($is_xhr) {
     });
   </script>
   <?php } ?>
+ </div>
  </body>
 </html>
-

@@ -4,17 +4,39 @@ if (typeof PMPB ===  'undefined') PMPB = {};
 
 "use strict";
 
-PMPB.search = function(apiUrl) {
+PMPB.search = function(apiUrl, resultFormatter) {
     var resultsDiv = $('#results');
     var spinner = '<img src="spinner.gif" /> Searching...';
+    if (!resultFormatter) resultFormatter = PMPB.formatResult;
     resultsDiv.append(spinner);
     //console.log('req: ' + apiUrl);
     $.getJSON(apiUrl, function(res) {
         //console.log(res);
         resultsDiv.html('');
+        if (res.total == 0) {
+            resultsDiv.html('Sorry, no results.');
+            return;
+        }
+        
         $.each(res.results, function(idx,r) {
             //console.log(r);
-            resultsDiv.append('<div class="result">'+r.attributes.title+'</div>');
+            resultsDiv.append(resultFormatter(r));
         });
     });
+}
+
+PMPB.formatResult = function(r) {
+    console.log(r);
+    var d = '<div class="result">';
+       d += '<a href="?doc='+encodeURIComponent(r.links.navigation[0].href)+'">';
+       d += r.attributes.title;
+       d += '</a>';
+       if (r.attributes.tags) {
+           d += ' [' + r.attributes.tags.join('; ') + ']';
+       }
+       d += '<div class="teaser">';
+       d += (r.attributes.teaser || r.attributes.description || '');
+       d += '</div>';
+       d += '</div>';
+    return d;
 }

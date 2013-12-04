@@ -3,6 +3,10 @@ body {
     margin: 0;
 }
 
+#main {
+    padding: 4px;
+}
+
 #results {
     padding: 1em;
 }
