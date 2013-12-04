@@ -108,7 +108,7 @@ function pmpb_build_params() {
 if ($is_xhr) {
     pmpb_search();
 }
-else if ($_GET['doc']) {
+else if (isset($_GET['doc'])) {
     pmpb_show_doc($_GET['doc']);
     exit();
 }
@@ -127,8 +127,8 @@ $params = pmpb_build_params();
  <div id="main">
   <h1>PMP Browser</h1>
   <form>
-   <label for="text">All text:<label><input name="text" value="<?php echo htmlspecialchars($params['text']) ?>" />
-   <label for="tag">Tag:</label><input name="tag" value="<?php echo htmlspecialchars($params['tag']) ?>" />
+   <label for="text">All text:<label><input name="text" value="<?php echo isset($params['text']) ? htmlspecialchars($params['text']) : '' ?>" />
+   <label for="tag">Tag:</label><input name="tag" value="<?php echo isset($params['tag']) ? htmlspecialchars($params['tag']) : '' ?>" />
    <button>Search</button>
   </form>
   <div id="results"></div>
