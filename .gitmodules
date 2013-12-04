@@ -1,0 +1,3 @@
+[submodule "phpsdk"]
+	path = phpsdk
+	url = git@github.com:publicmediaplatform/phpsdk.git
