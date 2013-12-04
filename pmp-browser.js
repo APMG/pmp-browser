@@ -26,7 +26,7 @@ PMPB.search = function(apiUrl, resultFormatter) {
 }
 
 PMPB.formatResult = function(r) {
-    console.log(r);
+    //console.log(r);
     var d = '<div class="result">';
        d += '<a href="?doc='+encodeURIComponent(r.links.navigation[0].href)+'">';
        d += r.attributes.title;
