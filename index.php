@@ -3,6 +3,9 @@
 /*
 
  PMP Browser
+ Copyright 2013 American Public Media Group
+ See LICENSE for terms.
+
  A simple wrapper around the PHP SDK.
  Requires a file 'pmp-config.php' in the same directory as this file, containing the following variables:
  $host, $client_id, $client_secret
