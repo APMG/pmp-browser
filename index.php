@@ -95,7 +95,7 @@ function pmpb_show_doc($url) {
  * @return array $params
  */
 function pmpb_build_params() {
-    $valid_fields = array('tag', 'text', 'limit', 'offset', 'searchsort', 'collection');
+    $valid_fields = array('tag', 'text', 'profile', 'limit', 'offset', 'searchsort', 'collection');
     $params = array();
     foreach ($valid_fields as $field) {
         if (isset($_GET[$field]) && strlen($_GET[$field])) {
@@ -135,6 +135,7 @@ $params = pmpb_build_params();
   <table>
    <tr><th>All text:</th><td><input name="text" value="<?php echo isset($params['text']) ? htmlspecialchars($params['text']) : '' ?>" /></td></tr>
    <tr><th>Tag:</th><td><input name="tag" value="<?php echo isset($params['tag']) ? htmlspecialchars($params['tag']) : '' ?>" /></td></tr>
+   <tr><th>Profile:</th><td><input name="profile" value="<?php echo isset($params['profile']) ? htmlspecialchars($params['profile']) : '' ?>" /> (e.g. "story" "media" "audio" "video" "user" "organization")</td></tr>
    <tr><th>Results per page:</th><td>
     <select name="limit">
    <?php foreach (array(10,25,50,100) as $n) { 
