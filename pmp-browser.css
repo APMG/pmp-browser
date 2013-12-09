@@ -14,3 +14,15 @@ body {
 .result {
     margin: 1em;
 }
+
+.search th {
+    text-align:right;
+}
+
+.search td {
+    padding-left: 4px;
+}
+
+.search td input {
+    width: 30em;
+}

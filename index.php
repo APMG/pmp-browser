@@ -132,8 +132,8 @@ $params = pmpb_build_params();
  <div id="main">
   <h1>PMP Browser</h1>
   <form>
-  <table>
-   <tr><th>All text:</th><td><input name="text" value="<?php echo isset($params['text']) ? htmlspecialchars($params['text']) : '' ?>" /></td></tr>
+  <table class="search">
+   <tr><th>Title/Content:</th><td><input name="text" value="<?php echo isset($params['text']) ? htmlspecialchars($params['text']) : '' ?>" /></td></tr>
    <tr><th>Tag:</th><td><input name="tag" value="<?php echo isset($params['tag']) ? htmlspecialchars($params['tag']) : '' ?>" /></td></tr>
    <tr><th>Profile:</th><td><input name="profile" value="<?php echo isset($params['profile']) ? htmlspecialchars($params['profile']) : '' ?>" /> (e.g. "story" "media" "audio" "video" "user" "organization")</td></tr>
    <tr><th>Results per page:</th><td>
