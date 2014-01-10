@@ -64,7 +64,7 @@ function pmpb_search() {
     else {
         $response['results'] = $results->items()->toArray();
         $response['uri']     = $results->getUri();
-        $navself = $results->links('navigation')->rels(array("urn:pmp:navigation:self"));
+        $navself = $results->links('navigation')->rels(array("self"));
         $response['total']   = $navself[0]->totalitems;
     }
     if (isset($_GET['raw'])) {
