@@ -7,7 +7,8 @@
  See LICENSE for terms.
 
  A simple wrapper around the PHP SDK.
- Requires a file 'pmp-config.php' in the same directory as this file, containing the following variables:
+ Requires a file 'pmp-config.php' in the same directory as this file (or specified via server environment), 
+ containing the following variables:
  $host, $client_id, $client_secret
 
 */
@@ -38,12 +39,24 @@ if ((isset($_SERVER['HTTP_X_REQUESTED_WITH'])
 
 $this_url = $_SERVER['REQUEST_URI']; // under Apache
 
+/**
+ * Returns path to config file. Can be set with PMP_BROWSER_CONFIG environment variable.
+ */
+function pmpb_get_config_path() {
+    if (isset($_SERVER['PMP_BROWSER_CONFIG'])) {
+        return $_SERVER['PMP_BROWSER_CONFIG'];
+    }
+    else {
+        return dirname(realpath(__FILE__)) . '/pmp-config.php';
+    }
+}
+
 
 /**
  * Proxy GET params to PMP search.
  */
 function pmpb_search() {
-    include dirname(realpath(__FILE__)) . '/pmp-config.php';
+    include pmpb_get_config_path();
     $client = new AuthClient($host, $client_id, $client_secret);
     $params = pmpb_build_params();
     //print_r($params);
@@ -81,7 +94,7 @@ function pmpb_search() {
  * @param unknown $url
  */
 function pmpb_show_doc($url) {
-    include dirname(realpath(__FILE__)) . '/pmp-config.php';
+    include pmpb_get_config_path();
     $client = new AuthClient($host, $client_id, $client_secret);
     $doc = new CollectionDocJson($url, $client);
     header('Content-Type: application/json');
