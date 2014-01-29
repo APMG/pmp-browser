@@ -28,14 +28,19 @@ PMPB.search = function(apiUrl, resultFormatter) {
 PMPB.formatResult = function(r) {
     //console.log(r);
     if (!r) return '';
-    var url = r.links.navigation[0].href;
+    var url = r.href;
     var d = '<div class="result">';
-       d += '<a href="?doc='+encodeURIComponent(url)+'">';
+       d += '<div class="title">';
+       d += '<a class="title" href="?doc='+encodeURIComponent(url)+'">';
        d += r.attributes.title;
        d += '</a>';
+       d += ' - <span class="published">'+r.attributes.published+'</span>';
+       d += '</div>';
+       d += '<div class="tags">';
        if (r.attributes.tags) {
            d += ' [' + r.attributes.tags.join('; ') + ']';
        }
+       d += '</div>';
        d += '<div class="teaser">';
        d += (r.attributes.teaser || r.attributes.description || '');
        d += '</div>';

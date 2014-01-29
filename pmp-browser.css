@@ -13,6 +13,17 @@ body {
 
 .result {
     margin: 1em;
+    padding-top: 0.5em;
+    border-top: 1px solid #ddd;
+}
+
+.published {
+    font-size: 90%;
+    color: #777;
+}
+
+.tags {
+    margin: 0.5em;
 }
 
 .search th {
