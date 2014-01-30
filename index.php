@@ -137,9 +137,11 @@ $params = pmpb_build_params();
 <html>
  <head>
   <title>PMP Browser</title>
+  <link rel="stylesheet" type="text/css" href="wPaginate.css" />
   <link rel="stylesheet" type="text/css" href="pmp-browser.css" />
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script type="text/javascript" src="pmp-browser.js"></script>
+  <script type="text/javascript" src="wPaginate.js"></script>
  </head>
  <body>
  <div id="main">
@@ -162,6 +164,7 @@ $params = pmpb_build_params();
    <tr><th></th><td><button>Search</button></td></tr>
   </table>
   </form>
+  <div id="pager"></div>
   <div id="results"></div>
   <?php if (count($_GET)) { ?>
   <script type="text/javascript">

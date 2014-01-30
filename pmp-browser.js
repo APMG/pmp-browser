@@ -10,14 +10,29 @@ PMPB.search = function(apiUrl, resultFormatter) {
     if (!resultFormatter) resultFormatter = PMPB.formatResult;
     resultsDiv.append(spinner);
     //console.log('req: ' + apiUrl);
+    var baseUri = apiUrl.replace(/&?offset=\d+/, '');
     $.getJSON(apiUrl+'&xhr=1', function(res) {
-        //console.log(res);
+        console.log(res);
         resultsDiv.html('');
         if (res.total == 0) {
             resultsDiv.html('Sorry, no results.');
             return;
         }
-        
+        $('#pager').append('<div class="total">'+res.total+' results</div>');
+        var pagerSettings = {
+            theme: 'grey',
+            total: parseInt(res.total),
+            limit: parseInt(res.query.limit),
+            index: parseInt(res.query.offset || 0),
+            first: '|<',
+            last:  '>|',
+            url:   function(idx) {
+                var u = baseUri + '&offset='+(idx*res.query.limit);
+                return u;
+            }
+        }; 
+        console.log(pagerSettings);
+        $('#pager').wPaginate(pagerSettings);
         $.each(res.results, function(idx,r) {
             //console.log(r);
             resultsDiv.append(resultFormatter(r));

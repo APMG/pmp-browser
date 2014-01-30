@@ -11,6 +11,14 @@ body {
     padding: 1em;
 }
 
+#pager {
+    margin-left: 1em;
+}
+
+.total {
+    margin-bottom: 4px;
+}
+
 .result {
     margin: 1em;
     padding-top: 0.5em;
@@ -36,4 +44,11 @@ body {
 
 .search td input {
     width: 30em;
+}
+
+/* override pager defaults */
+._wPaginate_grey ._wPaginate_link_active {
+    color:#000;
+    font-weight: bold;
+    border: 1px solid #000;
 }
