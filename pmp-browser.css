@@ -34,6 +34,12 @@ body {
     margin: 0.5em;
 }
 
+.uri {
+    font-size: 80%;
+    color: green;
+    padding-top: 4px;
+}
+
 .search th {
     text-align:right;
 }

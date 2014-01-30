@@ -51,6 +51,7 @@ PMPB.formatResult = function(r) {
        d += '</a>';
        d += ' - <span class="published">'+r.attributes.published+'</span>';
        d += '</div>';
+       d += '<div class="uri"><a class="uri" href="'+url+'">'+url+'</a></div>';
        d += '<div class="tags">';
        if (r.attributes.tags) {
            d += ' [' + r.attributes.tags.join('; ') + ']';
