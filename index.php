@@ -108,7 +108,20 @@ function pmpb_show_doc($url) {
  * @return array $params
  */
 function pmpb_build_params() {
-    $valid_fields = array('tag', 'text', 'profile', 'limit', 'offset', 'searchsort', 'collection');
+    // get valid fields from PMP home doc 'urn:collectiondoc:query:docs'
+    // the home doc is public (no authn needed) so just grab it with the RestAgent
+    include pmpb_get_config_path();
+    $ragent       = new \restagent\Request;
+    $resp         = $ragent->get($host); // $host from config
+    $valid_fields = array();
+    if ($resp['code'] == 200) {
+        $home_doc = json_decode($resp['data'], true);
+        foreach ( $home_doc['links']['query'] as $qlink ) {
+            if ($qlink['rels'][0] == 'urn:collectiondoc:query:docs') {
+                $valid_fields = array_keys($qlink['href-vars']);
+            }
+        }
+    }
     $params = array();
     foreach ($valid_fields as $field) {
         if (isset($_GET[$field]) && strlen($_GET[$field])) {
