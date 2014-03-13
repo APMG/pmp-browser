@@ -52,6 +52,13 @@ body {
     width: 30em;
 }
 
+.result .thumb img {
+    max-height: 100px;
+    float: left;
+    border: 1px solid #ddd;
+    margin-right: 8px;
+}
+
 /* override pager defaults */
 ._wPaginate_grey ._wPaginate_link_active {
     color:#000;
