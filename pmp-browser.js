@@ -70,6 +70,9 @@ PMPB.formatResult = function(r) {
 
 PMPB.findImage = function(r) {
     var resImg = 'http://publicmediaplatform.org/wp-content/uploads/logo.png';
+    if (!r.items) {
+        return resImg;
+    }
     $.each(r.items, function(idx, item) {
         if (item.links.profile[0].href.match(/\/image/)) {
             $.each(item.links.enclosure, function(idx2, img) {
