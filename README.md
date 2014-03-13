@@ -1,10 +1,9 @@
 # PMP Browser example application
 
-This example application depends on the git repository 'phpsdk' on github.
-You can update it with:
+This example application depends on the APMG phpsdk repository on github.
+You can find the current branch here:
 
-    % git submodule update phpsdk
-    % git submodule foreach git pull
+ https://github.com/APMG/phpsdk/tree/mprstory
 
 Create a pmp-config.php file in the same directory as index.php,
 containing the key variables:
