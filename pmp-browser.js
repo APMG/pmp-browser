@@ -20,6 +20,7 @@ PMPB.search = function(apiUrl, resultFormatter) {
         }
         $('#pager').append('<div class="total">'+res.total+' results</div>');
         var pagerSettings = {
+            spread: 2,
             theme: 'grey',
             total: parseInt(res.total),
             limit: parseInt(res.query.limit),

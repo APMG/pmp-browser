@@ -158,12 +158,15 @@ $params = pmpb_build_params();
  </head>
  <body>
  <div id="main">
-  <h1>PMP Browser</h1>
+  <a href="http://pmp.io/"><img id="pmp-logo" src="http://publicmediaplatform.org/wp-content/uploads/logo.png" /></a>
+  <h1 title="Fork me"><a href="https://github.com/APMG/pmp-browser">PMP Browser</a></h1>
   <form>
   <table class="search">
    <tr><th>Title/Content:</th><td><input name="text" value="<?php echo isset($params['text']) ? htmlspecialchars($params['text']) : '' ?>" /></td></tr>
    <tr><th>Tag:</th><td><input name="tag" value="<?php echo isset($params['tag']) ? htmlspecialchars($params['tag']) : '' ?>" /></td></tr>
-   <tr><th>Profile:</th><td><input name="profile" value="<?php echo isset($params['profile']) ? htmlspecialchars($params['profile']) : '' ?>" /> (e.g. "story" "media" "audio" "video" "user" "organization")</td></tr>
+   <tr><th>Profile:</th><td><input name="profile" value="<?php echo isset($params['profile']) ? htmlspecialchars($params['profile']) : '' ?>" />
+     <div class="help"> (e.g. "story" "media" "audio" "video" "user" "organization")</div>
+    </td></tr>
    <tr><th>Results per page:</th><td>
     <select name="limit">
    <?php foreach (array(10,25,50,100) as $n) { 
