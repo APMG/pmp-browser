@@ -101,7 +101,7 @@
 			var currentPage = Math.ceil(this.settings.index/this.settings.limit);
 			var start = 0, end = 0;
 
-			console.log(totalPages + ':' + visiblePages)
+			//console.log(totalPages + ':' + visiblePages)
 
 			// get start and end page
 			if(totalPages <= visiblePages) { start = 0; end = totalPages; }
