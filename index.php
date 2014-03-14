@@ -7,7 +7,7 @@
  See LICENSE for terms.
 
  A simple wrapper around the PHP SDK.
- Requires a file 'pmp-config.php' in the same directory as this file (or specified via server environment), 
+ Requires a file 'pmp-config.php' in the same directory as this file (or specified via server environment),
  containing the following variables:
  $host, $client_id, $client_secret
 
@@ -41,13 +41,46 @@ $this_url = $_SERVER['REQUEST_URI']; // under Apache
 
 /**
  * Returns path to config file. Can be set with PMP_BROWSER_CONFIG environment variable.
+ *
+ * @return unknown
  */
+
+
 function pmpb_get_config_path() {
     if (isset($_SERVER['PMP_BROWSER_CONFIG'])) {
         return $_SERVER['PMP_BROWSER_CONFIG'];
     }
     else {
         return dirname(realpath(__FILE__)) . '/pmp-config.php';
+    }
+}
+
+
+/**
+ *
+ */
+function pmpb_load_header() {
+    $header_file = dirname(realpath(__FILE__)) . '/header.php';
+    if (isset($_SERVER['PMP_BROWSER_HEADER'])) {
+        $header_file = $_SERVER['PMP_BROWSER_HEADER'];
+    }
+    error_log("header: $header_file");
+    if (file_exists($header_file)) {
+        include $header_file;
+    }
+}
+
+
+/**
+ *
+ */
+function pmpb_load_footer() {
+    $footer_file = dirname(realpath(__FILE__)) . '/footer.php';
+    if (isset($_SERVER['PMP_BROWSER_FOOTER'])) {
+        $footer_file = $_SERVER['PMP_BROWSER_FOOTER'];
+    }
+    if (file_exists($footer_file)) {
+        include $footer_file;
     }
 }
 
@@ -89,7 +122,6 @@ function pmpb_search() {
 
 
 /**
- *
  *
  * @param unknown $url
  */
@@ -139,7 +171,7 @@ function pmpb_build_params() {
 if ($is_xhr) {
     pmpb_search();
 }
-else if (isset($_GET['doc'])) {
+elseif (isset($_GET['doc'])) {
     pmpb_show_doc($_GET['doc']);
     exit();
 }
@@ -157,6 +189,7 @@ $params = pmpb_build_params();
   <script type="text/javascript" src="wPaginate.js"></script>
  </head>
  <body>
+ <?php pmpb_load_header(); ?>
  <div id="main">
   <a href="http://pmp.io/"><img id="pmp-logo" src="http://publicmediaplatform.org/wp-content/uploads/logo.png" /></a>
   <h1 title="Fork me"><a href="https://github.com/APMG/pmp-browser">PMP Browser</a></h1>
@@ -169,12 +202,13 @@ $params = pmpb_build_params();
     </td></tr>
    <tr><th>Results per page:</th><td>
     <select name="limit">
-   <?php foreach (array(10,25,50,100) as $n) { 
-         echo '<option';
-         if ($params['limit'] == $n) { echo ' selected="selected"'; }
-         echo ">$n</option>\n";
-     }
-   ?>
+<?php
+foreach (array(10, 25, 50, 100) as $n) {
+    echo '<option';
+    if ($params['limit'] == $n) { echo ' selected="selected"'; }
+    echo ">$n</option>\n";
+}
+?>
     </select>
    </td></tr>
    <tr><th></th><td><button>Search</button></td></tr>
@@ -190,5 +224,6 @@ $params = pmpb_build_params();
   </script>
   <?php } ?>
  </div>
+ <?php pmpb_load_footer(); ?>
  </body>
 </html>
