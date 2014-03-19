@@ -41,6 +41,11 @@ h1 a {
     color: #777;
 }
 
+.profile {
+    font-size: 80%;
+    color: #666;
+}
+
 .tags {
     margin: 0.5em;
 }

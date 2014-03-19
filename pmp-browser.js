@@ -48,6 +48,7 @@ PMPB.formatResult = function(r) {
     if (!r) return '';
     var url = r.href;
     var thumbnail = PMPB.findImage(r);
+    var profile   = r.links.profile[0].title || r.links.profile[0].href.match(/\/(\w+)$/)[1];
     var d = '<div class="result">';
        d += '<div class="thumb"><img src="'+thumbnail+'" /></div>';
        d += '<div class="title">';
@@ -55,6 +56,7 @@ PMPB.formatResult = function(r) {
        d += r.attributes.title;
        d += '</a>';
        d += ' - <span class="published">'+r.attributes.published+'</span>';
+       d += ' - <span class="profile">'+profile+'</span>';
        d += '</div>';
        d += '<div class="uri"><a class="uri" href="'+url+'">'+url+'</a></div>';
        d += '<div class="tags">';
@@ -75,6 +77,7 @@ PMPB.findImage = function(r) {
         return resImg;
     }
     $.each(r.items, function(idx, item) {
+        if (!item) return;
         if (item.links.profile[0].href.match(/\/image/)) {
             $.each(item.links.enclosure, function(idx2, img) {
                 if (img.meta.crop == 'primary') {
