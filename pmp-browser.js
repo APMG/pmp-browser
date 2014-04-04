@@ -71,15 +71,29 @@ PMPB.formatResult = function(r) {
     return d;
 }
 
+PMPB.profileIsImage = function(item) {
+    return item.links.profile[0].href.match(/\/image/);
+}
+
 PMPB.findImage = function(r) {
     var resImg = 'http://publicmediaplatform.org/wp-content/uploads/logo.png';
-    if (!r.items) {
+    if (!r.items && !PMPB.profileIsImage(r)) {
         return resImg;
+    }
+    if (PMPB.profileIsImage(r)) {
+        $.each(r.links.enclosure, function(idx, img) {
+            if (!img.meta) return;
+            if (img.meta.crop == 'primary') {
+                resImg = img.href;
+            }
+        });
+        if (resImg) return resImg;
     }
     $.each(r.items, function(idx, item) {
         if (!item) return;
-        if (item.links.profile[0].href.match(/\/image/)) {
+        if (PMPB.profileIsImage(item)) {
             $.each(item.links.enclosure, function(idx2, img) {
+                if (!img.meta) return;
                 if (img.meta.crop == 'primary') {
                     resImg = img.href;
                 }
@@ -89,4 +103,3 @@ PMPB.findImage = function(r) {
     return resImg;
 }
 
-                
