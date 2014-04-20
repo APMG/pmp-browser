@@ -64,7 +64,7 @@ function pmpb_load_header() {
     if (isset($_SERVER['PMP_BROWSER_HEADER'])) {
         $header_file = $_SERVER['PMP_BROWSER_HEADER'];
     }
-    error_log("header: $header_file");
+    //error_log("header: $header_file");
     if (file_exists($header_file)) {
         include $header_file;
     }
@@ -144,6 +144,7 @@ function pmpb_build_params() {
     // the home doc is public (no authn needed) so just grab it with the RestAgent
     include pmpb_get_config_path();
     $ragent       = new \restagent\Request;
+    $ragent->timeout(20000);
     $resp         = $ragent->get($host); // $host from config
     $valid_fields = array();
     if ($resp['code'] == 200) {
