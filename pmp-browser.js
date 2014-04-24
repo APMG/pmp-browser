@@ -11,7 +11,7 @@ PMPB.search = function(apiUrl, resultFormatter) {
     resultsDiv.append(spinner);
     //console.log('req: ' + apiUrl);
     var baseUri = apiUrl.replace(/&?offset=\d+/, '');
-    $.getJSON(apiUrl+'&xhr=1', function(res) {
+    var jqXHR = $.getJSON(apiUrl+'&xhr=1', function(res) {
         console.log(res);
         resultsDiv.html('');
         if (res.total == 0) {
@@ -40,7 +40,17 @@ PMPB.search = function(apiUrl, resultFormatter) {
             //console.log(r);
             resultsDiv.append(resultFormatter(r));
         });
-    });
+    })
+        .done(function() {
+            console.log('xhr is done');
+        })
+        .fail(function() {
+            console.log('xhr failed');
+            resultsDiv.html('Sorry, there was a server problem. Please try again later.');
+        })
+        .always(function() {
+            console.log('xhr always ftw');
+        });
 }
 
 PMPB.formatResult = function(r) {

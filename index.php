@@ -89,8 +89,8 @@ function pmpb_load_footer() {
  * Proxy GET params to PMP search.
  */
 function pmpb_search() {
-    include pmpb_get_config_path();
-    $client = new AuthClient($host, $client_id, $client_secret);
+
+    // check input
     $params = pmpb_build_params();
     //print_r($params);
     header('Content-Type: application/json');
@@ -99,19 +99,28 @@ function pmpb_search() {
         print json_encode(array('error' => 'No valid parameters found'));
         exit();
     }
-    $results = CollectionDocJson::search($host, $client, $params);
+
+    // query server
+    include pmpb_get_config_path();
     $response = array(
         'query' => $params,
     );
-    if (!$results) {
-        header('X-PMPB: no results', false, 200);
-        $response['total'] = 0;
+    try {
+        $client = new AuthClient($host, $client_id, $client_secret);
+        $results = CollectionDocJson::search($host, $client, $params);
+        if (!$results) {
+            header('X-PMPB: no results', false, 200);
+            $response['total'] = 0;
+        }
+        else {
+            $response['results'] = $results->items()->toArray();
+            $response['uri']     = $results->getUri();
+            $navself = $results->links('navigation')->rels(array("self"));
+            $response['total']   = $navself[0]->totalitems;
+        }
     }
-    else {
-        $response['results'] = $results->items()->toArray();
-        $response['uri']     = $results->getUri();
-        $navself = $results->links('navigation')->rels(array("self"));
-        $response['total']   = $navself[0]->totalitems;
+    catch (Exception $err) {
+        $response['error'] = $err;
     }
     if (isset($_GET['raw'])) {
         $response['raw'] = $results;
