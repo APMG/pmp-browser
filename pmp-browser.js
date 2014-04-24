@@ -97,19 +97,28 @@ PMPB.findImage = function(r) {
                 resImg = img.href;
             }
         });
-        if (resImg) return resImg;
-    }
-    $.each(r.items, function(idx, item) {
-        if (!item) return;
-        if (PMPB.profileIsImage(item)) {
-            $.each(item.links.enclosure, function(idx2, img) {
-                if (!img.meta) return;
-                if (img.meta.crop == 'primary') {
-                    resImg = img.href;
-                }
-            });
+
+        // if there's only one enclosure use it
+        if (r.links.enclosure.length == 1) {
+            resImg = r.links.enclosure[0].href;
         }
-    });
+    }
+    else {
+        $.each(r.items, function(idx, item) {
+            if (!item) return;
+            if (PMPB.profileIsImage(item)) {
+                $.each(item.links.enclosure, function(idx2, img) {
+                    if (!img.meta) return;
+                    if (img.meta.crop == 'primary') {
+                        resImg = img.href;
+                    }
+                });
+                if (item.links.enclosure.length == 1) {
+                    resImg = item.links.enclosure[0].href;
+                }
+            }
+        });
+    }
     return resImg;
 }
 
