@@ -186,6 +186,7 @@ elseif (isset($_GET['doc'])) {
     exit();
 }
 
+include pmpb_get_config_path();
 $params = pmpb_build_params();
 
 ?>
@@ -205,6 +206,7 @@ $params = pmpb_build_params();
   <h1 title="Fork me"><a href="https://github.com/APMG/pmp-browser">PMP Browser</a></h1>
   <form>
   <table class="search">
+   <tr><th>PMP API</th><td><a href="<?php echo $host ?>"><?php echo $host ?></a></td></tr>
    <tr><th>Title/Content:</th><td><input name="text" value="<?php echo isset($params['text']) ? htmlspecialchars($params['text']) : '' ?>" /></td></tr>
    <tr><th>Tag:</th><td><input name="tag" value="<?php echo isset($params['tag']) ? htmlspecialchars($params['tag']) : '' ?>" /></td></tr>
    <tr><th>Profile:</th><td><input name="profile" value="<?php echo isset($params['profile']) ? htmlspecialchars($params['profile']) : '' ?>" />
