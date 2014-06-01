@@ -18,8 +18,8 @@ PMPB.search = function(apiUrl, resultFormatter) {
             resultsDiv.html('Sorry, no results.');
             return;
         }
-        $('#pager').append('<div class="total">'+res.total+' results</div>');
         $('#pager').append('<div class="api-url">'+res.uri+'</div>');
+        $('#pager').append('<div class="total">'+res.total+' results</div>');
         var pagerSettings = {
             spread: 2,
             theme: 'grey',
