@@ -110,7 +110,8 @@ PMPB.findImage = function(r) {
             if (PMPB.profileIsImage(item)) {
                 $.each(item.links.enclosure, function(idx2, img) {
                     if (!img.meta) return;
-                    if (img.meta.crop == 'primary') {
+                    // TODO better way to id thumbnail, maybe by size
+                    if (img.meta.crop == 'primary' || img.meta.crop == 'square') {
                         resImg = img.href;
                     }
                 });
