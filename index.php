@@ -132,6 +132,19 @@ function pmpb_search() {
 
 /**
  *
+ * @return unknown
+ */
+function pmpb_get_app_uri() {
+    $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)
+        ? "https"
+        : "http";
+    $path = preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']);
+    return sprintf("%s://%s%s", $protocol, $_SERVER['HTTP_HOST'], $path);
+}
+
+
+/**
+ *
  * @param unknown $url
  */
 function pmpb_show_doc($url) {
@@ -139,7 +152,17 @@ function pmpb_show_doc($url) {
     $client = new AuthClient($host, $client_id, $client_secret);
     $doc = new CollectionDocJson($url, $client);
     header('Content-Type: application/json');
-    print json_encode($doc);
+    $json = json_encode($doc, JSON_UNESCAPED_SLASHES);
+
+    // set $proxy_links in config to turn this on
+    if (isset($proxy_links) && $proxy_links) {
+        $pattern = '/(' . preg_quote($host, '/') . ')/';
+        $replacement = sprintf("%s?doc=$1", pmpb_get_app_uri());
+        //error_log("$pattern => $replacement");
+        $json = preg_replace($pattern, $replacement, $json);
+    }
+
+    print $json;
 }
 
 
