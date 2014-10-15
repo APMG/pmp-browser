@@ -11,15 +11,23 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/APMG/phpsdk.git",
-                "reference": "44e20e57c3947900a32ebc912ebaf6eb280de030"
+                "reference": "b722b0f276a554b790637c0d2132cdd17e2ae2ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/APMG/phpsdk/zipball/44e20e57c3947900a32ebc912ebaf6eb280de030",
-                "reference": "44e20e57c3947900a32ebc912ebaf6eb280de030",
+                "url": "https://api.github.com/repos/APMG/phpsdk/zipball/b722b0f276a554b790637c0d2132cdd17e2ae2ea",
+                "reference": "b722b0f276a554b790637c0d2132cdd17e2ae2ea",
                 "shasum": ""
             },
             "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Pmp\\": "lib/Pmp/"
+                },
+                "classmap": [
+                    "lib/restagent"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -27,7 +35,7 @@
             "support": {
                 "source": "https://github.com/APMG/phpsdk/tree/composer"
             },
-            "time": "2014-10-15 16:44:30"
+            "time": "2014-10-15 17:37:44"
         }
     ],
     "packages-dev": [],
