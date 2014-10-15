@@ -13,10 +13,7 @@
 
 */
 
-// include libraries
-require_once dirname(realpath(__FILE__)) . '/phpsdk/lib/Pmp/Sdk/AuthClient.php';
-require_once dirname(realpath(__FILE__)) . '/phpsdk/lib/Pmp/Sdk/CollectionDocJson.php';
-require_once dirname(realpath(__FILE__)) . '/phpsdk/lib/Pmp/Sdk/Exception.php';
+require 'vendor/autoload.php';
 
 use \Pmp\Sdk\AuthClient as AuthClient;
 use \Pmp\Sdk\CollectionDocJson as CollectionDocJson;
