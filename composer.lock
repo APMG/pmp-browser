@@ -3,20 +3,20 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5e6236db7959dfdb8f5313b61891ca77",
+    "hash": "417d23824bb62d03f373d1fd98da832c",
     "packages": [
         {
             "name": "publicmediaplatform/phpsdk",
-            "version": "dev-composer",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/APMG/phpsdk.git",
-                "reference": "b722b0f276a554b790637c0d2132cdd17e2ae2ea"
+                "url": "https://github.com/publicmediaplatform/phpsdk.git",
+                "reference": "7e5f544fdd9714f2b03f66e7ea9f3ef3ccace629"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/APMG/phpsdk/zipball/b722b0f276a554b790637c0d2132cdd17e2ae2ea",
-                "reference": "b722b0f276a554b790637c0d2132cdd17e2ae2ea",
+                "url": "https://api.github.com/repos/publicmediaplatform/phpsdk/zipball/7e5f544fdd9714f2b03f66e7ea9f3ef3ccace629",
+                "reference": "7e5f544fdd9714f2b03f66e7ea9f3ef3ccace629",
                 "shasum": ""
             },
             "type": "library",
@@ -33,9 +33,10 @@
             ],
             "description": "This is a core SDK for Public Media Platform for PHP.",
             "support": {
-                "source": "https://github.com/APMG/phpsdk/tree/composer"
+                "source": "https://github.com/publicmediaplatform/phpsdk/tree/master",
+                "issues": "https://github.com/publicmediaplatform/phpsdk/issues"
             },
-            "time": "2014-10-15 17:37:44"
+            "time": "2014-10-15 17:59:51"
         }
     ],
     "packages-dev": [],

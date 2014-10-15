@@ -3,12 +3,12 @@
     "description": "PMP Browser example application",
     "license": "MIT",
     "require": {
-        "publicmediaplatform/phpsdk": "dev-composer"
+        "publicmediaplatform/phpsdk": "dev-master"
     },
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:APMG/phpsdk.git"
+            "url": "git@github.com:publicmediaplatform/phpsdk.git"
         }
     ]
 }
