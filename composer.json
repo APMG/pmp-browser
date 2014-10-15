@@ -1,0 +1,14 @@
+{
+    "name": "apmg/pmp-browser",
+    "description": "PMP Browser example application",
+    "license": "MIT",
+    "require": {
+        "publicmediaplatform/phpsdk": "dev-composer"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:APMG/phpsdk.git"
+        }
+    ]
+}
